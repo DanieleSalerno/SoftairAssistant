@@ -5,12 +5,241 @@
     <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
 </head>
 <body>
-<div id = "map" style = "width: 900px; height: 580px"></div>
+<style>
+    @font-face { font-family: Revamped; src: url('Revamped.otf'); }
+
+    body
+    {
+        height: 100%;
+        background: #242424;
+        display: flex;
+        align-items: center;
+
+
+    }
+
+
+    #container{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        height:90%;
+        width:90%;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        column-gap: 20px;
+        /*background: aqua;*/
+
+        margin: auto;
+
+
+    }
+
+
+    #text_container{
+        display:flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+        row-gap: 20px;
+    }
+
+    #map{
+        flex-grow:3;
+        height:100%;
+        width:80%;
+
+    }
+    .player_info{
+        display: flex;
+        flex-grow: 2;
+        justify-content: space-around;
+
+    }
+
+    .player_icon{
+        float:left;
+    }
+
+    .player_icon_img{
+        height:70px;
+        width:70px;
+    }
+    .text_panel{
+        display:flex;
+        flex-direction: column;
+    }
+    .name_user{
+        font-family: Revamped;
+        font-size: 30px;
+        color: #42c0fb;
+
+    }
+
+    .name_ally{
+        font-family: Revamped;
+        font-size: 30px;
+        color: #a6d785;
+
+    }
+
+    .life_container{
+        display:flex;
+        column-gap:5px;
+    }
+    .heart{
+        height:20px;
+        width:20px;
+    }
+
+    .munition{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+
+    .ammo_img{
+        display:flex;
+        justify-content: center;
+    }
+    .munition_img{
+        height: 50px;
+        width:50px;
+        margin: 0 auto;
+    }
+
+    .ammo_number{
+        font-family: Revamped;
+        font-size: 15px;
+        color: #6a6a6a;
+    }
+    .separator{
+        width:90%;
+        border: 1px solid #6a6a6a;
+        margin-top:-10px;
+        margin-bottom:-10px;
+    }
+
+</style>
+<div id="container">
+    <div id="text_container">
+        <div class="player_info">
+            <div class="player_icon">
+                <img class="player_icon_img" src="image/user_circle.png">
+            </div>
+            <div class="text_panel">
+                <div class="name_user">
+                    USER
+                </div>
+                <div class="life_container">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                </div>
+            </div>
+            <div class="munition">
+                <div class="ammo_img">
+                    <img class="munition_img" src="image/cartridge.png">
+                </div>
+                <div class="ammo_number">
+                    100/200
+                </div>
+            </div>
+        </div>
+        <hr class="separator">
+
+
+        <div class="player_info">
+            <div class="player_icon">
+                <img class="player_icon_img" src="image/ally_circle.png">
+            </div>
+            <div class="text_panel">
+                <div class="name_ally">
+                    ALLY 1
+                </div>
+                <div class="life_container">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                </div>
+            </div>
+            <div class="munition">
+                <div class="ammo_img">
+                    <img class="munition_img" src="image/cartridge.png">
+                </div>
+                <div class="ammo_number">
+                    100/200
+                </div>
+            </div>
+        </div>
+        <hr class="separator">
+
+
+        <div class="player_info">
+            <div class="player_icon">
+                <img class="player_icon_img" src="image/ally_circle.png">
+            </div>
+            <div class="text_panel">
+                <div class="name_ally">
+                    ALLY 2
+                </div>
+                <div class="life_container">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/blackHt.png">
+                </div>
+            </div>
+            <div class="munition">
+                <div class="ammo_img">
+                    <img class="munition_img" src="image/cartridge.png">
+                </div>
+                <div class="ammo_number">
+                    100/200
+                </div>
+            </div>
+        </div>
+        <hr class="separator">
+
+
+        <div class="player_info">
+            <div class="player_icon">
+                <img class="player_icon_img" src="image/ally_circle.png">
+            </div>
+            <div class="text_panel">
+                <div class="name_ally">
+                    ALLY 3
+                </div>
+                <div class="life_container">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                    <img class="heart" src ="image/redHt.png">
+                </div>
+            </div>
+            <div class="munition">
+                <div class="ammo_img">
+                    <img class="munition_img" src="image/cartridge.png">
+                </div>
+                <div class="ammo_number">
+                    100/200
+                </div>
+            </div>
+        </div>
+        <hr class="separator">
+    </div>
+
+     <div id = "map" style = "width: 900px; height: 580px"></div>
+</div>
+
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
 
     var myIcon = L.icon({
-        iconUrl: 'marker_icon/user_circle.png',
+        iconUrl: 'image/user_circle.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -18,7 +247,7 @@
     });
 
     var myIcon2 = L.icon({
-        iconUrl: 'marker_icon/ally_circle.png',
+        iconUrl: 'image/ally_circle.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -30,13 +259,15 @@
     async function movemarker() {
         console.log("here");
         for (let i = 0; i < 100; i++) {
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 1000));
             var latitude =marker1.getLatLng().lat;
-            var longitude = marker1.getLatLng().lng+0.002;
+            var longitude = marker1.getLatLng().lng+0.00002;
             var latlng=L.latLng(latitude,longitude);
             marker1.setLatLng(latlng);
 
-            var latitude2 =marker2.getLatLng().lat+0.002;
+            map.setView(latlng,18);
+
+            var latitude2 =marker2.getLatLng().lat+0.00002;
             var longitude2 = marker2.getLatLng().lng;
             var latlng2=L.latLng(latitude2,longitude2);
             marker2.setLatLng(latlng2);
@@ -46,8 +277,8 @@
 
     // Creating map options
     var mapOptions = {
-        center: [17.0000000, 78.000000000],
-        zoom: 15,
+        center: [41.01003, 15.09954],
+        zoom: 18,
         boxZoom: false,
         doubleClickZoom: false,
         dragging:false
@@ -57,11 +288,14 @@
     var map = new L.map('map', mapOptions);
 
     // Creating a Layer object
-    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-    var marker1 = L.marker([17.00200000, 78.00200000],{icon:myIcon}).addTo(map)
+    var layer = new L.TileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png');
+
+
+
+    var marker1 = L.marker([41.01003, 15.09954],{icon:myIcon}).addTo(map)
         .bindPopup('Me')
         .openPopup();
-    var marker2 = L.marker([17.0020000, 78.0020000],{icon:myIcon2}).addTo(map)
+    var marker2 = L.marker([41.01003, 15.09954],{icon:myIcon2}).addTo(map)
         .bindPopup('ally1')
         .openPopup();
     map.addLayer(layer);
