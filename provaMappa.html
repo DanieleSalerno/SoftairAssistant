@@ -41,7 +41,7 @@
     }
 
 
-    #text_container{
+    #user_cont{
         display:flex;
         flex-direction: column;
         flex-grow: 1;
@@ -50,9 +50,10 @@
     }
 
     #map{
-        flex-grow:3;
+        flex-grow:2;
         height:100%;
         width:80%;
+        min-height: 300px;
 
     }
     .player_info{
@@ -67,8 +68,8 @@
     }
 
     .player_icon_img{
-        height:70px;
-        width:70px;
+        height:60px;
+        width:60px;
     }
     .text_panel{
         display:flex;
@@ -76,14 +77,14 @@
     }
     .name_user{
         font-family: Revamped;
-        font-size: 25px;
+        font-size: 20px;
         color: #42c0fb;
 
     }
 
     .name_ally{
         font-family: Revamped;
-        font-size: 25px;
+        font-size: 20px;
         color: #a6d785;
 
     }
@@ -115,8 +116,8 @@
         justify-content: center;
     }
     .munition_img{
-        height: 50px;
-        width:50px;
+        height: 35px;
+        width:35px;
         margin: 0 auto;
     }
 
@@ -169,6 +170,7 @@
         font-family: Revamped;
         font-size: 20px;
         color: #6a6a6a;
+        text-align:center;
 
     }
 
@@ -192,138 +194,231 @@
         column-gap: 10px;
     }
 
+    #text_container{
+        display:flex;
+        flex-direction: column;
+        flex-grow:1;
+    }
+
 
 
     @media screen and (max-width: 1400px) {
 
-        .ammo_img{
-            display:flex;
+
+        .ammo_img {
+            display: flex;
             justify-content: center;
         }
-        .munition_img{
+
+        .munition_img {
             height: 30px;
-            width:30px;
+            width: 30px;
             margin: 0 auto;
         }
 
-        .ammo_number{
+        .ammo_number {
             font-family: Revamped;
             font-size: 10px;
             color: #6a6a6a;
         }
+
+
+        .name_user {
+            font-family: Revamped;
+            font-size: 15px;
+            color: #42c0fb;
+
+        }
+
+        .name_ally {
+            font-family: Revamped;
+            font-size: 15px;
+            color: #a6d785;
+
+        }
+
+        .player_icon_img {
+            height: 40px;
+            width: 40px;
+        }
     }
 
-</style>
+    @media screen and (max-width: 1000px) {
 
-<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3; display:none;"></canvas>
+        body{
+          display:inline;
+        }
+
+        #container{
+
+            flex-direction: column-reverse;
+        }
+
+        #text_container{
+            display:flex;
+            flex-direction: row;
+            width:90%;
+        }
+
+        #separator_acc{
+            display: none;
+        }
+
+        #accuracy_info{
+            height:100%;
+            width:100%;
+            flex-grow: 1;
+        }
+
+        #map{
+
+            width:100%;
+            height:100%;
+        }
+
+        #text_container{
+          justify-content: space-between;
+
+        }
+
+        #user_cont{
+            width:100%;
+        }
+
+
+    }
+
+
+    @media screen and (max-width: 750px) {
+        body{
+          align-items: normal;
+          display: inline-block;
+        }
+
+        #container{
+            margin-top:100px;
+            height:100%;
+            width:100%;
+        }
+        #text_container{
+            flex-direction: column;
+        }
+    }
+
+
+
+
+</style>
 
 
 
 <div id="container">
     <div id="text_container">
-        <div class="player_info">
-            <div class="player_icon">
-                <img class="player_icon_img" src="image/user_circle.png">
+        <div id="user_cont">
+            <div class="player_info">
+                <div class="player_icon">
+                    <img class="player_icon_img" src="image/user_circle.png">
+                </div>
+                <div class="text_panel">
+                    <div class="name_user">
+                        USER
+                    </div>
+                    <div class="life_container">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                    </div>
+                </div>
+                <div class="munition">
+                    <div class="ammo_img">
+                        <img class="munition_img" src="image/cartridge.png">
+                    </div>
+                    <div class="ammo_number">
+                        100/200
+                    </div>
+                </div>
             </div>
-            <div class="text_panel">
-                <div class="name_user">
-                    USER
+            <hr class="separator">
+
+
+            <div class="player_info">
+                <div class="player_icon">
+                    <img class="player_icon_img" src="image/ally_circle.png">
                 </div>
-                <div class="life_container">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
+                <div class="text_panel">
+                    <div class="name_ally">
+                        ALLY 1
+                    </div>
+
+                    <div class="life_container">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                    </div>
+                </div>
+                <div class="munition">
+                    <div class="ammo_img">
+                        <img class="munition_img" src="image/cartridge.png">
+                    </div>
+                    <div class="ammo_number">
+                        100/200
+                    </div>
                 </div>
             </div>
-            <div class="munition">
-                <div class="ammo_img">
-                    <img class="munition_img" src="image/cartridge.png">
+            <hr class="separator">
+
+
+            <div class="player_info">
+                <div class="player_icon">
+                    <img class="player_icon_img" src="image/ally_circle.png">
                 </div>
-                <div class="ammo_number">
-                    100/200
+                <div class="text_panel">
+                    <div class="name_ally">
+                        ALLY 2
+                    </div>
+                    <div class="life_container">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/blackHt.png">
+                    </div>
+                </div>
+                <div class="munition">
+                    <div class="ammo_img">
+                        <img class="munition_img" src="image/cartridge.png">
+                    </div>
+                    <div class="ammo_number">
+                        100/200
+                    </div>
                 </div>
             </div>
+            <hr class="separator">
+
+
+            <div class="player_info">
+                <div class="player_icon">
+                    <img class="player_icon_img" src="image/ally_circle.png">
+                </div>
+                <div class="text_panel">
+                    <div class="name_ally">
+                        ALLY 3
+                    </div>
+                    <div class="life_container">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                        <img class="heart" src ="image/redHt.png">
+                    </div>
+                </div>
+                <div class="munition">
+                    <div class="ammo_img">
+                        <img class="munition_img" src="image/cartridge.png">
+                    </div>
+                    <div class="ammo_number">
+                        100/200
+                    </div>
+                </div>
+            </div>
+            <hr class="separator">
         </div>
-        <hr class="separator">
-
-
-        <div class="player_info">
-            <div class="player_icon">
-                <img class="player_icon_img" src="image/ally_circle.png">
-            </div>
-            <div class="text_panel">
-                <div class="name_ally">
-                    ALLY 1
-                </div>
-
-                <div class="life_container">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                </div>
-            </div>
-            <div class="munition">
-                <div class="ammo_img">
-                    <img class="munition_img" src="image/cartridge.png">
-                </div>
-                <div class="ammo_number">
-                    100/200
-                </div>
-            </div>
-        </div>
-        <hr class="separator">
-
-
-        <div class="player_info">
-            <div class="player_icon">
-                <img class="player_icon_img" src="image/ally_circle.png">
-            </div>
-            <div class="text_panel">
-                <div class="name_ally">
-                    ALLY 2
-                </div>
-                <div class="life_container">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/blackHt.png">
-                </div>
-            </div>
-            <div class="munition">
-                <div class="ammo_img">
-                    <img class="munition_img" src="image/cartridge.png">
-                </div>
-                <div class="ammo_number">
-                    100/200
-                </div>
-            </div>
-        </div>
-        <hr class="separator">
-
-
-        <div class="player_info">
-            <div class="player_icon">
-                <img class="player_icon_img" src="image/ally_circle.png">
-            </div>
-            <div class="text_panel">
-                <div class="name_ally">
-                    ALLY 3
-                </div>
-                <div class="life_container">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                    <img class="heart" src ="image/redHt.png">
-                </div>
-            </div>
-            <div class="munition">
-                <div class="ammo_img">
-                    <img class="munition_img" src="image/cartridge.png">
-                </div>
-                <div class="ammo_number">
-                    100/200
-                </div>
-            </div>
-        </div>
-        <hr class="separator">
 
         <div id="accuracy_info">
             <div id="text_panel_info">
@@ -346,13 +441,13 @@
 
 
         </div>
-        <hr class="separator">
+        <hr class="separator" id="separator_acc">
 
 
 
     </div>
 
-     <div id = "map" style = "width: 900px; height: 580px"></div>
+     <div id = "map"></div>
 </div>
 
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
