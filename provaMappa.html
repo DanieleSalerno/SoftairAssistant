@@ -5,6 +5,7 @@
     <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
 </head>
 <body>
+
 <style>
     @font-face { font-family: Revamped; src: url('Revamped.otf'); }
 
@@ -75,16 +76,22 @@
     }
     .name_user{
         font-family: Revamped;
-        font-size: 30px;
+        font-size: 25px;
         color: #42c0fb;
 
     }
 
     .name_ally{
         font-family: Revamped;
-        font-size: 30px;
+        font-size: 25px;
         color: #a6d785;
 
+    }
+
+    .name_ally_map{
+        font-family: Revamped;
+        font-size: 10px;
+        color: #a6d785;
     }
 
     .life_container{
@@ -125,7 +132,93 @@
         margin-bottom:-10px;
     }
 
+    .icon_map{
+        height:20px;
+        width:20px;
+        margin: 0 auto;
+    }
+
+
+    #accuracy_icon_img{
+        height:100px;
+        width:100px;
+    }
+
+
+    #accuracy_info{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 2;
+        justify-content: center;
+        align-self: flex-end;
+        margin-top: 30px;
+        width: 100%;
+
+
+    }
+
+    #text_panel_info{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .text_in_acc{
+        font-family: Revamped;
+        font-size: 20px;
+        color: #6a6a6a;
+
+    }
+
+    #acc_number{
+        font-family: Revamped;
+        font-size: 40px;
+        color: #6a6a6a;
+    }
+
+
+
+    #acc_cont{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #bottom_part{
+        display:flex;
+        justify-content: center;
+        column-gap: 10px;
+    }
+
+
+
+    @media screen and (max-width: 1400px) {
+
+        .ammo_img{
+            display:flex;
+            justify-content: center;
+        }
+        .munition_img{
+            height: 30px;
+            width:30px;
+            margin: 0 auto;
+        }
+
+        .ammo_number{
+            font-family: Revamped;
+            font-size: 10px;
+            color: #6a6a6a;
+        }
+    }
+
 </style>
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3; display:none;"></canvas>
+
+
+
 <div id="container">
     <div id="text_container">
         <div class="player_info">
@@ -162,6 +255,7 @@
                 <div class="name_ally">
                     ALLY 1
                 </div>
+
                 <div class="life_container">
                     <img class="heart" src ="image/redHt.png">
                     <img class="heart" src ="image/redHt.png">
@@ -230,6 +324,32 @@
             </div>
         </div>
         <hr class="separator">
+
+        <div id="accuracy_info">
+            <div id="text_panel_info">
+                <div class="text_in_acc">
+                    AVERAGE ACCURACY
+                </div>
+
+            </div>
+            <div id="bottom_part">
+                <div class="player_icon">
+                    <img id="accuracy_icon_img" src="image/shooting-target.png">
+                </div>
+
+                <div id="acc_cont">
+                    <div id="acc_number">
+                        52%
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <hr class="separator">
+
+
+
     </div>
 
      <div id = "map" style = "width: 900px; height: 580px"></div>
@@ -238,16 +358,37 @@
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
 
-    var myIcon = L.icon({
+
+    /*var myIcon = L.icon({
         iconUrl: 'image/user_circle.png',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, 0],
+
+    });*/
+
+
+    var myIcon= new L.DivIcon({
+        className: 'my-div-icon',
+        html: '<div style="display:flex; align-items: center; flex-direction:column">' +
+            '<img class="icon_map" src="image/ally_circle.png">'+
+            '<div class="name_ally_map">Ally1</div>'+'</div>',
+
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, 0],
+    })
+
+    var myIcon2 = L.icon({
+        iconUrl: 'image/ally_circle.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
 
     });
 
-    var myIcon2 = L.icon({
-        iconUrl: 'image/ally_circle.png',
+    var sosIcon = L.icon({
+        iconUrl: 'image/pharmacy.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -271,6 +412,10 @@
             var longitude2 = marker2.getLatLng().lng;
             var latlng2=L.latLng(latitude2,longitude2);
             marker2.setLatLng(latlng2);
+
+            /*if(i==10){
+                marker1.setIcon(sosIcon);
+            }*/
             console.log("aaaa");
         }
     }
@@ -291,13 +436,13 @@
     var layer = new L.TileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png');
 
 
+    var tag=document.getElementById("prova")
 
-    var marker1 = L.marker([41.01003, 15.09954],{icon:myIcon}).addTo(map)
-        .bindPopup('Me')
-        .openPopup();
-    var marker2 = L.marker([41.01003, 15.09954],{icon:myIcon2}).addTo(map)
-        .bindPopup('ally1')
-        .openPopup();
+    var marker2 = L.marker([41.01003, 15.09954],{icon:myIcon2}).addTo(map);
+
+
+    var marker1 = L.marker([41.01003, 15.09954],{icon:myIcon}).addTo(map);
+
     map.addLayer(layer);
     movemarker();
     // Adding layer to the map
