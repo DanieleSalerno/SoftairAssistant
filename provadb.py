@@ -11,7 +11,7 @@ table=dynamodb.create_table(
     TableName='GPS_data',
     KeySchema=[
         {
-            'AttributeName': 'playerID',
+            'AttributeName': 'player_id',
             'KeyType': 'HASH' #partition key
         },
         {
@@ -21,8 +21,8 @@ table=dynamodb.create_table(
     ],
     AttributeDefinitions=[
         {
-            'AttributeName':'playerID',
-            'AttributeType':'N'
+            'AttributeName':'player_id',
+            'AttributeType':'S'
         },
         {
             'AttributeName':'timestamp',
