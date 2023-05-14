@@ -26,8 +26,8 @@ for team,player_id in teams:
 
 print(last_lat_lon)
 
-#here we simulate that all the sensors send data to queue each second for a game of 60 seconds
-duration_in_sec = 3;
+
+duration_in_sec = 5;
 for i in range(duration_in_sec):
     for team, player_id in teams:
         queue = sqs.get_queue_by_name(QueueName=team)
