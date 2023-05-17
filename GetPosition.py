@@ -26,3 +26,8 @@ while True:
         items=response['Items']
         print(items)
     time.sleep(2)
+
+
+
+
+

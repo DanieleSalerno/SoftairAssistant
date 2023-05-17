@@ -48,8 +48,13 @@ for i in range(duration_in_sec):
                        % (team, str(i), measure_date, str(newlat), str(newlon))
             print(msg_body)
             queue.send_message(MessageBody=msg_body)
+            time.sleep(10)
         team_num=team_num+1
     time.sleep(2)
 
 
 print(last_lat_lon)
+
+
+
+
