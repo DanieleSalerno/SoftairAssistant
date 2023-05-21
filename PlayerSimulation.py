@@ -3,7 +3,7 @@ import time
 import boto3
 import datetime
 import random
-import numpy
+
 
 
 last_lat_lon=[]
@@ -27,7 +27,7 @@ for team,player_id in teams:
 print(last_lat_lon)
 
 
-duration_in_sec = 5;
+duration_in_sec = 100;
 for i in range(duration_in_sec):
     for team, player_id in teams:
         queue = sqs.get_queue_by_name(QueueName=team)
@@ -48,7 +48,7 @@ for i in range(duration_in_sec):
                        % (team, str(i), measure_date, str(newlat), str(newlon))
             print(msg_body)
             queue.send_message(MessageBody=msg_body)
-            time.sleep(15)
+
 
 
         team_num=team_num+1

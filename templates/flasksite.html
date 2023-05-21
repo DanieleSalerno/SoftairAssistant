@@ -7,7 +7,7 @@
 <body>
 
 <style>
-    @font-face { font-family: Revamped; src: url('Revamped.otf'); }
+    @font-face { font-family: Revamped; src: url('static/Revamped.otf'); }
 
     body
     {
@@ -319,21 +319,21 @@
         <div id="user_cont">
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="../image/user_circle.png">
+                    <img class="player_icon_img" src="static/user_circle.png">
                 </div>
                 <div class="text_panel">
                     <div class="name_user">
                         USER
                     </div>
                     <div class="life_container">
-                        <img class="heart" src ="../image/redHt.png">
-                        <img class="heart" src ="../image/redHt.png">
-                        <img class="heart" src ="../image/redHt.png">
+                        <img class="heart" src ="static/redHt.png">
+                        <img class="heart" src ="static/redHt.png">
+                        <img class="heart" src ="static/redHt.png">
                     </div>
                 </div>
                 <div class="munition">
                     <div class="ammo_img">
-                        <img class="munition_img" src="../image/cartridge.png">
+                        <img class="munition_img" src="static/cartridge.png">
                     </div>
                     <div class="ammo_number">
                         100/200
@@ -345,7 +345,7 @@
 
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="../image/ally_circle.png">
+                    <img class="player_icon_img" src="static/ally_circle.png">
                 </div>
                 <div class="text_panel">
                     <div class="name_ally">
@@ -453,12 +453,20 @@
 </div>
 
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<script src="aws-sdk-2.1381.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% for row in gpsdata%}
+{% for item in row %}
+<script>
+           var prova={{item}}
+           console.log(prova + "sadasdasd")
+</script>
+
+{% endfor %}+
 
 <script>
 
     /*var myIcon = L.icon({
-        iconUrl: 'image/user_circle.png',
+        iconUrl: 'static/user_circle.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -469,7 +477,7 @@
     var myIcon= new L.DivIcon({
         className: 'my-div-icon',
         html: '<div style="display:flex; align-items: center; flex-direction:column">' +
-            '<img class="icon_map" src="../image/ally_circle.png">'+
+            '<img class="icon_map" src="static/ally_circle.png">'+
             '<div class="name_ally_map">Ally1</div>'+'</div>',
 
         iconSize: [20, 20],
@@ -478,7 +486,7 @@
     })
 
     var myIcon2 = L.icon({
-        iconUrl: 'image/ally_circle.png',
+        iconUrl: 'static/ally_circle.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -486,7 +494,7 @@
     });
 
     var sosIcon = L.icon({
-        iconUrl: 'image/pharmacy.png',
+        iconUrl: 'static/pharmacy.png',
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
@@ -544,32 +552,7 @@
     map.addLayer(layer);
     movemarker();
 </script>
-<script type="text/javascript">
 
-
-
-    let ddb=new AWS.DynamoDB({apiVersion: '2012-08-10',endpoint:'http://localhost:4566',secretAccessKey:"test",region:'us-east-2',accessKeyId:'test'});
-
-    var params = {
-
-        KeyConditionExpression: 'player_id = Vitality_0',
-
-        TableName: 'GPS_data'
-    };
-
-    ddb.query(params, function(err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            //console.log("Success", data.Items);
-            data.Items.forEach(function(element, index, array) {
-                console.log(element);
-            });
-        }
-    });
-
-
-</script>
 
 </body>
 

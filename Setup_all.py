@@ -18,17 +18,19 @@ os.system(r'cd '+PATH)
 os.system(r'aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query '+"\'"+'Role.Arn'+"\'"+' --endpoint-url=http://localhost:4566')
 os.system(r'aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566')
 
+os.system(r'aws iam put-role-policy --role-name lambdarole --policy-name dbpolicy --policy-document file://policyDB.json --endpoint-url=http://localhost:4566')
+
 #Create Table GPS
 createDB.create_table_gps()
 #lambda function sendsosmessage
-os.system('aws lambda create-function --function-name sendsosmessage --zip-file fileb://SOSmessage/sendsosfunc_pck.zip --handler SendSosMessage.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566')
+os.system('aws lambda create-function --function-name sendsosmessage --zip-file fileb://SOSmessage/sendsosfunc_pck.zip --handler SendSosMessage.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566')
 os.system('aws lambda create-event-source-mapping --function-name sendsosmessage --batch-size 4 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:SOSqueue --endpoint-url=http://localhost:4566')
 
 
 #lambda function SaveGPS data
-os.system('aws lambda create-function --function-name savegpsdata --zip-file fileb://SaveGpsData.zip --handler SaveGpsData.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566')
+os.system('aws lambda create-function --function-name savegpsdata --zip-file fileb://SaveGpsData.zip --handler SaveGPSData.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566')
 for name in teams_name:
     if name != 'Sosqueue':
         print
-        os.system('aws lambda create-event-source-mapping --function-name savegpsdata --batch-size 4 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:'+name+' --endpoint-url=http://localhost:4566')
+        os.system('aws lambda create-event-source-mapping --function-name savegpsdata --batch-size 5 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:'+name+' --endpoint-url=http://localhost:4566')
 

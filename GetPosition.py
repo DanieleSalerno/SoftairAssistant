@@ -1,3 +1,4 @@
+import json
 import time
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -9,7 +10,7 @@ table_name = "GPS_data"
 #ScanIndexForward
 
 
-players=['Vitality_0','Vitality_1','Vitality_2','Vitality_4']
+players=['Vitality_0','Vitality_1','Vitality_2','Vitality_3']
 table = dynamodb.Table(table_name)
 print("------------------------------------------------------------------------------------------------")
 while True:
@@ -23,8 +24,10 @@ while True:
         except ClientError as e:
             print(e.response['Error']['Message'])
 
-        items=response['Items']
-        print(items)
+        player_id=response['Items'][0]['player_id']
+
+        print(player_id)
+
     time.sleep(2)
 
 
