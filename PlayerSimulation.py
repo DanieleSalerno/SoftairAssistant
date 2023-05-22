@@ -27,7 +27,7 @@ for team,player_id in teams:
 print(last_lat_lon)
 
 
-duration_in_sec = 100;
+duration_in_sec = 2;
 for i in range(duration_in_sec):
     for team, player_id in teams:
         queue = sqs.get_queue_by_name(QueueName=team)

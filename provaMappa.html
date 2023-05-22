@@ -453,7 +453,7 @@
 </div>
 
 <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<script src="aws-sdk-2.1381.0.min.js"></script>
+
 
 <script>
 
@@ -545,28 +545,36 @@
     movemarker();
 </script>
 <script type="text/javascript">
-
-
-
-    let ddb=new AWS.DynamoDB({apiVersion: '2012-08-10',endpoint:'http://localhost:4566',secretAccessKey:"test",region:'us-east-2',accessKeyId:'test'});
-
-    var params = {
-
-        KeyConditionExpression: 'player_id = Vitality_0',
-
-        TableName: 'GPS_data'
-    };
-
-    ddb.query(params, function(err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            //console.log("Success", data.Items);
-            data.Items.forEach(function(element, index, array) {
-                console.log(element);
-            });
+    console.log("API");
+    let array
+    let players
+    let request= new XMLHttpRequest();
+    request.open("GET","http://127.0.0.1:8000/");
+    request.send()
+    request.onload = () =>{
+        console.log(request);
+        if(request.status=200){
+            array=JSON.parse(request.response);
+            console.log("lettura array");
+            players=array.player;
+            console.log(players)
         }
-    });
+        else{
+            console.log('error');
+        }
+    }
+
+    for (let i=0;i<4; i++){
+        console.log(players[i].player_id)
+        console.log(players[i].latitude)
+        console.log(players[i].longitude)
+
+    }
+
+
+
+
+
 
 
 </script>

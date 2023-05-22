@@ -1,12 +1,4 @@
 var AWS = require("aws-sdk")
-/*let awsConfig={
-    "region":"us-east-2",
-    "endpoint":"http://localhost:4566",
-    "accessKeyId":"test",
-    "secretAccessKey":"test"
-
-}
-*/
 
 const express = require('express')
 const app = express()
