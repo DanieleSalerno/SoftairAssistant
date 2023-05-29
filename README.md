@@ -39,35 +39,59 @@ Nel momento in cui avviene un'emergenza la partita verrà messa in pausa e verr�
 
 Come si può notare tutti i dati inviati contengono l'id del game, questo perchè potrebbe tornare utile nel caso si voglia, in un implementazione futura, garantire assistenza post game e permettere ad ogni utente di effettuare il rewatch del game.
 Tutti i dati sopra riportati verranno mostrati, tramite una GUI, ad ogni utente.
-
-## Requisiti 
-Prima di iniziare bisogna installare:
-
-- python 3.9
-- docker 
-- localstack
-- fastAPI
-- uvicorn
+# Installation and usage
+## Prerequisites 
 
 
-## how to do 
-There are two ways to set up all the necessary element:
+1. [Docker](https://docs.docker.com/get-docker/)
+2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+3. [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html)
+4. *(Optional)* nodejs for database visualization.
+5. [fastAPI](https://fastapi.tiangolo.com/)
+6. [uvicorn](https://www.uvicorn.org/)
 
-- write every single operation in the cmd 
-- run the setup_all file available in the repository and change the content of the Variable PATH with the installation folder of the project
 
-1. Run localstack on docker 
-   1. docker run --rm -it -p 4566:4566 -p 4571:4571  localstack/localstack
-2. if u have some error when u call the Lambda function that ask something like "mount /var/run/docker.sock:/var/run/docker.sock" use the followinf command to run the docker
-   2. docker run --rm -it -p 4566:4566 -p 4571:4571 -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack
+## Setting up the environment  
 
-From this point u need to chose if you want to use the setup_file or if you don't want
-3. create all the queue
+**1. Launch [LocalStack](https://localstack.cloud/)**
 
-   1. `aws sqs create-queue --queue-name Vitality --endpoint-url=http://localhost:4566`
-   2. `aws sqs create-queue --queue-name PGNAT --endpoint-url=http://localhost:4566`
-   3. `aws sqs create-queue --queue-name Infoqueue --endpoint-url=http://localhost:4566`
-   4. `aws sqs create-queue --queue-name Sosqueue --endpoint-url=http://localhost:4566`
+`docker run --rm -it -p 4566:4566 -p 4571:4571  localstack/localstack`
+
+if u have some error when you call the Lambda function that ask something like "_mount /var/run/docker.sock:/var/run/docker.sock_" use the following command to run the docker
+
+`docker run --rm -it -p 4566:4566 -p 4571:4571 -v /var/run/docker.sock:/var/run/docker.sock localstack/localstack`
+
+
+**2. Create a SQS queue for each queue**
+
+`aws sqs create-queue --queue-name Vitality --endpoint-url=http://localhost:4566`
+
+`aws sqs create-queue --queue-name PGNAT --endpoint-url=http://localhost:4566`
+
+`aws sqs create-queue --queue-name Infoqueue --endpoint-url=http://localhost:4566`
+
+`aws sqs create-queue --queue-name Sosqueue --endpoint-url=http://localhost:4566`
+
+- Check that the queues are been correctly created
+
+`aws sqs list-queues --endpoint-url=http://localhost:4566`
+
+**3 Create the DynamoDB tables**
+
+1) Use the python code to create the DynamoDB tables
+
+`python3 createDB.py`
+
+2) Check that the tables are been correctly created
+
+`aws dynamodb list-tables --endpoint-url=http://localhost:4566`
+
+or using the [dynamodb-admin] GUI with the command
+
+`DYNAMO_ENDPOINT=http://0.0.0.0:4566 dynamodb-admin`
+and then going to `http://localhost:8001`.
+
+
 
 4. Then u need to create and add the role and add the policy
    1. `aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566`

@@ -4,7 +4,7 @@ import boto3
 from fastapi import FastAPI
 import random
 from fastapi.middleware.cors import CORSMiddleware
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
 origins=[
     "http://localhost:63342"
@@ -23,6 +23,8 @@ app.add_middleware(
 @app.get('/gpsdata')
 #that will be the first thing do when user use api
 async def root():
+
+    total_munition=0
     #api response
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:4566")
 
@@ -47,11 +49,13 @@ async def root():
 
         if(response["Count"]!=0):
             res.append(response['Items'][0])
+            total_munition+=int(response['Items'][0]['munition'])
 
 
 
 
-    return {'player': res}
+
+    return {'player': res,'total_munition':total_munition}
 
 
 
@@ -148,6 +152,8 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
+                FilterExpression=Attr('game_id').eq("1")
+
 
 
             )
@@ -155,7 +161,7 @@ async def root():
             print(e.response['Error']['Message'])
 
         if(response["Count"]!=0):
-            kill+=int(response['count'])
+            kill+=int(response['Count'])
 
 
 

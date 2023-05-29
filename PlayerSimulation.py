@@ -88,7 +88,7 @@ for i in range(duration_in_sec):
             if(last_ammo_number[team_num][i]>0 and last_life_num[team_num][i]>0):
                 #prob of 10% of get hitted by someone
                 prob_hit=random.randrange(0,100)
-                print(prob_hit)
+
                 if(prob_hit>90):
                     last_life_num[team_num][i]-=1
 

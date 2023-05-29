@@ -35,33 +35,7 @@ def create_table_gps():
         ,)
 
 
-
-"""def create_teams():
-    dynamodb=boto3.resource('dynamodb',
-                            endpoint_url="http://localhost:4566")
-    print("here")
-    table=dynamodb.create_table(
-        TableName='teams',
-        KeySchema=[
-            {
-                'AttributeName': 'team_name',
-                'KeyType': 'HASH' #partition key
-            },
-        ],
-        AttributeDefinitions=[
-            {
-                'AttributeName':'team_name',
-                'AttributeType':'S'
-            },
-        ],
-        ProvisionedThroughput={
-            'ReadCapacityUnits':10,
-            'WriteCapacityUnits':10
-        }
-        ,)
-        """
-
-#This table contains the information about every hut that a player receive
+#This table contains the information about every hit that a player receive
 def create_table_info():
     dynamodb=boto3.resource('dynamodb',
                             endpoint_url="http://localhost:4566")
@@ -128,3 +102,7 @@ def create_table_SOS():
         }
         ,)
 
+if __name__ == "__main__":
+    create_table_gps()
+    create_table_info()
+    create_table_SOS()

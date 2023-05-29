@@ -462,7 +462,6 @@
 
 
 <script>
-
     /*var myIcon = L.icon({
         iconUrl: 'image/user_circle.png',
         iconSize: [20, 20],
@@ -715,6 +714,8 @@
 
 
 
+
+
 </script>
 <script type="text/javascript">
 async function callAPI() {
@@ -723,7 +724,8 @@ async function callAPI() {
         console.log("API");
         let array
         let players
-
+        let average_accuracy
+        let total_munition
         let request = new XMLHttpRequest();
         const players_name = []
         let players_latitude = []
@@ -736,13 +738,18 @@ async function callAPI() {
             if (request.status = 200) {
                 array = JSON.parse(request.response);
                 console.log("lettura array");
-                players = array.player[0].player_id;
+
                 for (let i = 0; i < 4; i++) {
-                    players_name[i] = array.player[i].player_id;
-                    players_latitude[i] = array.player[i].latitude;
-                    players_longitude[i] = array.player[i].longitude;
-                    players_ammo[i]=array.player[i].munition;
+
+                        players_name[i] = array.player[i].player_id;
+                        players_latitude[i] = array.player[i].latitude;
+                        players_longitude[i] = array.player[i].longitude;
+                        players_ammo[i] = array.player[i].munition;
+
+
                 }
+
+                total_munition=array.total_munition
                 /*for (let i = 0; i < 4; i++) {
                     console.log(players_name[i]);
                     console.log(players_latitude[i]);
@@ -753,6 +760,9 @@ async function callAPI() {
 
                 }
                 */
+
+
+
 
                 updatevalue(players_name,players_ammo);
                 movemarkerGPS(players_latitude, players_longitude);
@@ -855,25 +865,31 @@ async function callAPI() {
 
 
 
-
-        let kills
-        let kill_data
+        average_accuracy=0;
+        var hits=0;
+        let kill_data;
         let killinfo = new XMLHttpRequest();
         killinfo.open("GET", "http://127.0.0.1:8000/getkill");
         killinfo.send()
         killinfo.onload = () => {
             console.log(killinfo);
             if (killinfo.status = 200) {
+
+
                 kill_data = JSON.parse(killinfo.response);
- 
-                kill=kill_data.kills
+                if(kill_data.kills!=undefined) {
+                    hits = kill_data.kills;
 
+                    console.log("KILLLLLLLLL");
+                    console.log(hits);
+                    console.log(total_munition);
 
+                    average_accuracy = parseInt((hits / (800 - total_munition))*100);
+                    console.log(average_accuracy);
 
+                   document.getElementById('acc_number').innerHTML=average_accuracy+"%"
 
-
-
-
+                }
             } else {
                 console.log('error');
             }

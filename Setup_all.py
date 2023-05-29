@@ -11,7 +11,7 @@ for name in teams_name:
     os.system('aws sqs create-queue --queue-name '+ name +' --endpoint-url=http://localhost:4566')
 
 os.system('aws sqs list-queues --endpoint-url=http://localhost:4566')
-os.system('aws sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/Vitality --attribute-name QueueArn --endpoint-url=http://localhost:4566')
+#os.system('aws sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/Vitality --attribute-name QueueArn --endpoint-url=http://localhost:4566')
 
 #creating and attaching role
 os.system(r'cd '+PATH)
