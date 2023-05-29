@@ -39,11 +39,15 @@ def lambda_handler(event, context):
         print(latitude)
         print(longitude)
         print(measure_data)
+        game_id=payload['game_id']
+        munition=payload['munition']
         item = {
             'player_id': player_id,
             'timestamp': str(measure_data),
             'latitude': latitude,
-            'longitude': longitude
+            'longitude': longitude,
+            'game_id':game_id,
+            'munition':munition
         }
         table.put_item(Item=item)
 

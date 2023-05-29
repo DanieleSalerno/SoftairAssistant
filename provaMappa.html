@@ -82,6 +82,12 @@
 
     }
 
+    .name_user_map{
+        font-family: Revamped;
+        font-size: 10px;
+        color: #42c0fb;
+    }
+
     .name_ally{
         font-family: Revamped;
         font-size: 20px;
@@ -319,23 +325,23 @@
         <div id="user_cont">
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="../image/user_circle.png">
+                    <img class="player_icon_img" src="/image/user_circle.png" id="user_icon_l">
                 </div>
                 <div class="text_panel">
-                    <div class="name_user">
+                    <div class="name_user" id="user_name_l">
                         USER
                     </div>
                     <div class="life_container">
-                        <img class="heart" src ="../image/redHt.png">
-                        <img class="heart" src ="../image/redHt.png">
-                        <img class="heart" src ="../image/redHt.png">
+                        <img class="heart" src ="/image/redHt.png" id="user_life1">
+                        <img class="heart" src ="/image/redHt.png" id="user_life2">
+                        <img class="heart" src ="/image/redHt.png" id="user_life3">
                     </div>
                 </div>
                 <div class="munition">
                     <div class="ammo_img">
-                        <img class="munition_img" src="../image/cartridge.png">
+                        <img class="munition_img" src="/image/cartridge.png">
                     </div>
-                    <div class="ammo_number">
+                    <div class="ammo_number" id="ammo_n_user">
                         100/200
                     </div>
                 </div>
@@ -345,24 +351,24 @@
 
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="../image/ally_circle.png">
+                    <img class="player_icon_img" src="/image/ally_circle.png" id="ally1_icon_l">
                 </div>
                 <div class="text_panel">
-                    <div class="name_ally">
+                    <div class="name_ally" id="ally1_name_l">
                         ALLY 1
                     </div>
 
                     <div class="life_container">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/redHt.png">
+                        <img class="heart" src ="image/redHt.png" id="ally1_life1">
+                        <img class="heart" src ="image/redHt.png" id="ally1_life2">
+                        <img class="heart" src ="image/redHt.png" id="ally1_life3">
                     </div>
                 </div>
                 <div class="munition">
                     <div class="ammo_img">
-                        <img class="munition_img" src="static/cartridge.png">
+                        <img class="munition_img" src="image/cartridge.png">
                     </div>
-                    <div class="ammo_number">
+                    <div class="ammo_number" id="ammo_n_ally1">
                         100/200
                     </div>
                 </div>
@@ -372,23 +378,23 @@
 
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="static/ally_circle.png">
+                    <img class="player_icon_img" src="image/ally_circle.png" id="ally2_icon_l">
                 </div>
                 <div class="text_panel">
-                    <div class="name_ally">
+                    <div class="name_ally" id="ally2_name_l">
                         ALLY 2
                     </div>
                     <div class="life_container">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/blackHt.png">
+                        <img class="heart" src ="image/redHt.png" id="ally2_life1">
+                        <img class="heart" src ="image/redHt.png" id="ally2_life2">
+                        <img class="heart" src ="image/redHt.png" id="ally2_life3">
                     </div>
                 </div>
                 <div class="munition">
                     <div class="ammo_img">
-                        <img class="munition_img" src="static/cartridge.png">
+                        <img class="munition_img" src="image/cartridge.png">
                     </div>
-                    <div class="ammo_number">
+                    <div class="ammo_number" id="ammo_n_ally2">
                         100/200
                     </div>
                 </div>
@@ -398,23 +404,23 @@
 
             <div class="player_info">
                 <div class="player_icon">
-                    <img class="player_icon_img" src="static/ally_circle.png">
+                    <img class="player_icon_img" src="image/ally_circle.png" id="ally3_icon_l">
                 </div>
                 <div class="text_panel">
-                    <div class="name_ally">
+                    <div class="name_ally" id="ally3_name_l">
                         ALLY 3
                     </div>
                     <div class="life_container">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/redHt.png">
-                        <img class="heart" src ="static/redHt.png">
+                        <img class="heart" src ="image/redHt.png" id="ally3_life1">
+                        <img class="heart" src ="image/redHt.png" id="ally3_life2">
+                        <img class="heart" src ="image/redHt.png" id="ally3_life3">
                     </div>
                 </div>
                 <div class="munition">
                     <div class="ammo_img">
-                        <img class="munition_img" src="static/cartridge.png">
+                        <img class="munition_img" src="image/cartridge.png">
                     </div>
-                    <div class="ammo_number">
+                    <div class="ammo_number" id="ammo_n_ally3">
                         100/200
                     </div>
                 </div>
@@ -431,7 +437,7 @@
             </div>
             <div id="bottom_part">
                 <div class="player_icon">
-                    <img id="accuracy_icon_img" src="static/shooting-target.png">
+                    <img id="accuracy_icon_img" src="image/shooting-target.png">
                 </div>
 
                 <div id="acc_cont">
@@ -466,24 +472,55 @@
     });*/
 
 
-    var myIcon= new L.DivIcon({
+    var myIcon1= new L.DivIcon({
         className: 'my-div-icon',
         html: '<div style="display:flex; align-items: center; flex-direction:column">' +
-            '<img class="icon_map" src="../image/ally_circle.png">'+
-            '<div class="name_ally_map">Ally1</div>'+'</div>',
+            '<img class="icon_map" src="../image/user_circle.png">'+
+            '<div class="name_user_map" id="user_tag_m">Me</div>'+'</div>',
 
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
     })
 
-    var myIcon2 = L.icon({
-        iconUrl: 'image/ally_circle.png',
+    var myIcon2= new L.DivIcon({
+        className: 'my-div-icon',
+        html: '<div style="display:flex; align-items: center; flex-direction:column">' +
+            '<img class="icon_map" src="../image/ally_circle.png">'+
+            '<div class="name_ally_map" id="ally1_tag_m">Ally2</div>'+'</div>',
+
         iconSize: [20, 20],
         iconAnchor: [10, 10],
         popupAnchor: [0, 0],
+    })
 
-    });
+
+
+    var myIcon3= new L.DivIcon({
+        className: 'my-div-icon',
+        html: '<div style="display:flex; align-items: center; flex-direction:column">' +
+            '<img class="icon_map" src="../image/ally_circle.png">'+
+            '<div class="name_ally_map" id="ally2_tag_m">Ally3</div>'+'</div>',
+
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, 0],
+    })
+
+
+
+    var myIcon4= new L.DivIcon({
+        className: 'my-div-icon',
+        html: '<div style="display:flex; align-items: center; flex-direction:column">' +
+            '<img class="icon_map" src="../image/ally_circle.png">'+
+            '<div class="name_ally_map" id="ally3_tag_m">Ally4</div>'+'</div>',
+
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, 0],
+    })
+
+
 
     var sosIcon = L.icon({
         iconUrl: 'image/pharmacy.png',
@@ -492,6 +529,19 @@
         popupAnchor: [0, 0],
 
     });
+    var deadIcon = L.icon({
+        iconUrl: 'image/skull.png',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, 0],
+
+    });
+
+
+    let icons=[myIcon1,myIcon2,myIcon3,myIcon4];
+
+
+
 
 
 
@@ -535,41 +585,320 @@
 
 
     var tag=document.getElementById("prova")
+    var usermark = L.marker([41.01003, 15.09954],{icon:myIcon1}).addTo(map);
+    var ally1mark = L.marker([41.01003, 15.09954],{icon:myIcon2}).addTo(map);
+    var ally2mark = L.marker([41.01003, 15.09954],{icon:myIcon3}).addTo(map);
+    var ally3mark = L.marker([41.01003, 15.09954],{icon:myIcon4}).addTo(map);
 
-    var marker2 = L.marker([41.01003, 15.09954],{icon:myIcon2}).addTo(map);
 
 
-    var marker1 = L.marker([41.01003, 15.09954],{icon:myIcon}).addTo(map);
-
+    let markers=[usermark,ally1mark,ally2mark,ally3mark]
+    let img_icon_l=[
+        document.getElementById("user_icon_l"),
+        document.getElementById("ally1_icon_l"),
+        document.getElementById("ally2_icon_l"),
+        document.getElementById("ally3_icon_l")
+    ]
     map.addLayer(layer);
-    movemarker();
-</script>
-<script type="text/javascript">
-    console.log("API");
-    let array
-    let players
-    let request= new XMLHttpRequest();
-    request.open("GET","http://127.0.0.1:8000/");
-    request.send()
-    request.onload = () =>{
-        console.log(request);
-        if(request.status=200){
-            array=JSON.parse(request.response);
-            console.log("lettura array");
-            players=array.player;
-            console.log(players)
+    //movemarker();
+
+    async function movemarkerGPS(array_lat,array_long) {
+        console.log("hereinmarker");
+
+        console.log(typeof(array_lat[0]))
+        var latlngtmp=L.latLng(parseFloat(array_lat[0]),parseFloat(array_long[0]));
+        //user
+        usermark.setLatLng(latlngtmp);
+        //Here we center the map on the user
+        map.setView(latlngtmp,18);
+
+        //ally1
+        var latlng1=L.latLng(parseFloat(array_lat[1]),parseFloat(array_long[1]));
+        ally1mark.setLatLng(latlng1);
+
+
+
+        var latlng2=L.latLng(parseFloat(array_lat[2]),parseFloat(array_long[2]));
+        ally2mark.setLatLng(latlng2);
+
+
+
+        var latlng3=L.latLng(parseFloat(array_lat[3]),parseFloat(array_long[3]));
+        ally3mark.setLatLng(latlng3);
+
+        /*if(i==10){
+            marker1.setIcon(sosIcon);
+        }*/
+        console.log("aaaa");
+
+        await new Promise(r => setTimeout(r, 2000));
+
+    }
+
+    async function updatevalue(name,munition){
+        document.getElementById('user_tag_m').innerHTML=name[0];
+        document.getElementById('ally1_tag_m').innerHTML=name[1];
+        document.getElementById('ally2_tag_m').innerHTML=name[2];
+        document.getElementById('ally3_tag_m').innerHTML=name[3];
+
+        document.getElementById('user_name_l').innerHTML=name[0];
+        document.getElementById('ally1_name_l').innerHTML=name[1];
+        document.getElementById('ally2_name_l').innerHTML=name[2];
+        document.getElementById('ally3_name_l').innerHTML=name[3];
+
+        document.getElementById("ammo_n_user").innerHTML=munition[0]+"/200";
+        document.getElementById("ammo_n_ally1").innerHTML=munition[1]+"/200";
+        document.getElementById("ammo_n_ally2").innerHTML=munition[2]+"/200";
+        document.getElementById("ammo_n_ally3").innerHTML=munition[3]+"/200";
+    }
+
+
+    async function updatelifepoints(lifepoints){
+        names=["user","ally1","ally2","ally3"];
+        for (let i=0;i<4;i++){
+            switch(lifepoints[i]){
+                case 1:
+                    document.getElementById(names[i]+"_life1").src="image/redHt.png";
+                    document.getElementById(names[i]+"_life2").src="image/blackHt.png";
+                    document.getElementById(names[i]+"_life3").src="image/blackHt.png";
+                    break;
+                case 2:
+                    document.getElementById(names[i]+"_life1").src="image/redHt.png";
+                    document.getElementById(names[i]+"_life2").src="image/redHt.png";
+                    document.getElementById(names[i]+"_life3").src="image/blackHt.png";
+                    break;
+
+                case 3:
+                    document.getElementById(names[i]+"_life1").src="image/redHt.png";
+                    document.getElementById(names[i]+"_life2").src="image/redHt.png";
+                    document.getElementById(names[i]+"_life3").src="image/redHt.png";
+                    break;
+                case 0:
+                    document.getElementById(names[i]+"_life1").src="image/blackHt.png";
+                    document.getElementById(names[i]+"_life2").src="image/blackHt.png";
+                    document.getElementById(names[i]+"_life3").src="image/blackHt.png";
+                    markers[i].setIcon(deadIcon);
+                    img_icon_l[i].src="image/skull.png";
+                    break;
+            }
+        }
+    }
+
+
+
+
+    async function updateSOS(sos){
+        names=["user","ally1","ally2","ally3"];
+        for (let i=0;i<4;i++){
+            if(sos[i]==1){
+                markers[i].setIcon(sosIcon);
+                img_icon_l[i].src="image/pharmacy.png";
+            }
+        }
+    }
+
+
+    function resolvesos(index){
+        names=["user","ally1","ally2","ally3"];
+        markers[index].setIcon(icons[index]);
+        if(index==0){
+            img_icon_l[index].src="image/user_circle.png";
         }
         else{
-            console.log('error');
+            img_icon_l[index].src="image/ally_circle.png";
         }
-    }
-
-    for (let i=0;i<4; i++){
-        console.log(players[i].player_id)
-        console.log(players[i].latitude)
-        console.log(players[i].longitude)
 
     }
+
+
+
+
+
+
+</script>
+<script type="text/javascript">
+async function callAPI() {
+    while(true){
+
+        console.log("API");
+        let array
+        let players
+
+        let request = new XMLHttpRequest();
+        const players_name = []
+        let players_latitude = []
+        let players_longitude = []
+        let players_ammo=[]
+        request.open("GET", "http://127.0.0.1:8000/gpsdata");
+        request.send()
+        request.onload = () => {
+            console.log(request);
+            if (request.status = 200) {
+                array = JSON.parse(request.response);
+                console.log("lettura array");
+                players = array.player[0].player_id;
+                for (let i = 0; i < 4; i++) {
+                    players_name[i] = array.player[i].player_id;
+                    players_latitude[i] = array.player[i].latitude;
+                    players_longitude[i] = array.player[i].longitude;
+                    players_ammo[i]=array.player[i].munition;
+                }
+                /*for (let i = 0; i < 4; i++) {
+                    console.log(players_name[i]);
+                    console.log(players_latitude[i]);
+                    console.log(players_longitude[i]);
+                    console.log("MUNITION");
+                    console.log(players_ammo[i]);
+
+
+                }
+                */
+
+                updatevalue(players_name,players_ammo);
+                movemarkerGPS(players_latitude, players_longitude);
+
+
+            } else {
+                console.log('error');
+            }
+        }
+
+
+        let players_life=[3,3,3,3];
+        let array_infos;
+        let requestinfo = new XMLHttpRequest();
+        requestinfo.open("GET", "http://127.0.0.1:8000/infoplayer");
+        requestinfo.send()
+        requestinfo.onload = () => {
+            console.log(requestinfo);
+            if (requestinfo.status = 200) {
+                array_infos = JSON.parse(requestinfo.response);
+                console.log("lettura array");
+                console.log("----------------------------");
+                console.log(array_infos.player[0]);
+                console.log("----------------------------");
+                console.log(array_infos.player[1]);
+                console.log("----------------------------");
+                console.log(array_infos.player[2]);
+                console.log("----------------------------");
+                console.log(array_infos.player[3]);
+
+                for (let i = 0; i < 4; i++) {
+                    if(array_infos.player[i]!=undefined){
+                    players_life[i] = parseInt(array_infos.player[i].life);
+                    }
+                }
+
+                for (let i = 0; i < 4; i++) {
+                    console.log(players_life[i])
+
+                }
+
+                updatelifepoints(players_life);
+
+
+
+
+            } else {
+                console.log('error');
+            }
+        }
+
+
+        let players_sos=[0,0,0,0];
+        let array_sos;
+        let requestsos = new XMLHttpRequest();
+        requestsos.open("GET", "http://127.0.0.1:8000/SOSevent");
+        requestsos.send()
+        requestsos.onload = () => {
+            console.log(requestsos);
+            if (requestsos.status = 200) {
+                array_sos = JSON.parse(requestsos.response);
+                console.log("lettura array SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS ");
+                console.log("----------------------------");
+                console.log(array_sos.player[0]);
+                console.log("----------------------------");
+                console.log(array_sos.player[1]);
+                console.log("----------------------------");
+                console.log(array_sos.player[2]);
+                console.log("----------------------------");
+                console.log(array_sos.player[3]);
+                flag=0;
+                for (let i = 0; i < 4; i++) {
+                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="not_resolved"){
+                        console.log(array_sos.player[i].status);
+                        players_sos[i] = 1;
+                        index_sos=i;
+                        flag=1;
+                    }
+                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="resolved" && flag==1){
+                        console.log(array_sos.player[i].status);
+                        players_sos[i] = 0;
+                        resolvesos(i);
+
+
+                    }
+
+                }
+
+
+
+                updateSOS(players_sos);
+
+
+
+
+            } else {
+                console.log('error');
+            }
+        }
+
+
+
+
+        let kills
+        let kill_data
+        let killinfo = new XMLHttpRequest();
+        killinfo.open("GET", "http://127.0.0.1:8000/getkill");
+        killinfo.send()
+        killinfo.onload = () => {
+            console.log(killinfo);
+            if (killinfo.status = 200) {
+                kill_data = JSON.parse(killinfo.response);
+ 
+                kill=kill_data.kills
+
+
+
+
+
+
+
+            } else {
+                console.log('error');
+            }
+        }
+
+
+
+
+
+
+        console.log("i'm waiting 2 sec")
+        await new Promise(r => setTimeout(r, 2000));
+
+    }
+}
+
+callAPI()
+
+
+
+
+
+
+
+
 
 
 
