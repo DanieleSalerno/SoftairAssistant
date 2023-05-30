@@ -93,31 +93,144 @@ and then going to `http://localhost:8001`.
 
 
 
-4. Then u need to create and add the role and add the policy
-   1. `aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566`
-   2. `aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566`
+**4. Create the message-triggered Lambda function to store the gps data of each team** 
+
+   1. Create the role 
+
+`aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566`
+
+   2. Attach the policy
+
+`aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566`
+
+   3. Create the zip file
+
+`zip SaveGpsData.zip SaveGPSData.py`
+
+   4. Create the Lambda function
+
+`aws lambda create-function --function-name savegpsdata --zip-file fileb://SaveGpsData.zip --handler SaveGPSData.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566`
+
+   5. Create the event source mapping between function and queues
+
+`aws lambda create-event-source-mapping --function-name savegpsdata --batch-size 5 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:Vitality --endpoint-url=http://localhost:4566`
+
+`aws lambda create-event-source-mapping --function-name savegpsdata --batch-size 5 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:PGNAT --endpoint-url=http://localhost:4566`
+
+**5. Create the message-triggered Lambda function to store info data of each team**
+   1. Create the zip file 
+
+`zip sendinfofunc.zip SendInfoFunc.py`
+
+   2. Create the Lambda function
+
+`aws lambda create-function --function-name sendinfofunc --zip-file fileb://sendinfofunc.zip --handler SendInfoFunc.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566`
+
+   3. Create event source mapping between function and queue
+
+`aws lambda create-event-source-mapping --function-name sendinfofunc --batch-size 5 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:Infoqueue --endpoint-url=http://localhost:4566`
+
+
+**Set up the Lambda function triggered by SQS messages that notifies emergency during the game session via Discord and GUI**
+
+We need to create 2 IFTT Applet in order to correctly send data to discord, that because the free to use version of IFTT allow us to pass a maximum of 3 value to discord, but we need 5 values. So to solve this problem we use 2 Applet that work toghether to send message
+First of all u need to create a discord server with a text channel
+
+1. Create the first Applet
+   1. Go to https://ifttt.com/ and sign-up or log-in if you already have an account.
+   2. On the main page, click *Create* to create a new applet.
+   3. Click "*If This*", type *"webhooks"* in the search bar, and choose the *Webhooks* service.
+   4. Select "*Receive a web request*" and write *"sos_message"* in the "*Event Name*" field. Save the event name since it is required to trigger the event. Click *Create trigger*.
+   5. In the applet page click *Then That*, type *"discord"* in the search bar, and select *discord*.
+   6. Click *Post a rich message to a channel* and fill the fields as follow:
+
+   - Select the discord server (that you have previously created) where u want to send messages
+   - Select the text channel (that you have previously created) where u want to post the message 
+
+         Embed Title= :sos: Player   {{Value1}} request HELP
+
+         Embed Description= Latitude: {{Value2}} ----Longitude:{{Value3}}<br> 
+                               https://www.openstreetmap.org/?mlat={{Value2}}&amp;mlon={{Value3}}#map=19/{{Value2}}/{{Value3}}
+
+         Embed Color= ff111
+
+   7. Click *Create action*, *Continue*, and *Finish*.
 
 
 
 
-### MainScene
+2. Create the second Applet
+   1. On the main page, click *Create* to create a new applet.
+   2. Click "*If This*", type *"webhooks"* in the search bar, and choose the *Webhooks* service.
+   3. Select "*Receive a web request*" and write *"status_message"* in the "*Event Name*" field. Save the event name since it is required to trigger the event. Click *Create trigger*.
+   4. In the applet page click *Then That*, type *"discord"* in the search bar, and select *discord*.
+   5. Click *Post a rich message to a channel* and fill the fields as follow:
+
+   - Select the discord server (that you have previously created) where u want to send messages
+   - Select the text channel (that you have previously created) where u want to post the message
+
+         Message= STATUS 
+                    :heart:Heartbeat {{Value2}}
+                    :bubbles:Oxygen {{Value1}}
+
+                     Registered  {{Value3}}
+                     ~~                                                          ~~
+                     <br>
+
+   6. Click *Create action*, *Continue*, and *Finish*.
+
+3. Modify the variable key within the SendSosMessage.py function with your IFTT applet key (it can be find clicking on the icon of the webhook and clicking on _Documentation_).
+4. This lambda function have is a function with dependencies, so you need to follow the next steps to create it:
+   1. Navigate to the SOSmessage folder 
+   2. Install the additional dependencies using pip3 and zip the content of the new folder
+      1. `pip3 install --target ./package requests`
+      2. `cd package/`
+      3. `zip r ../sendsosfunc.zip`
+      4. `cd ..`
+      5. `zip -g sendsosfunc.zip SendSosMessage.py`
+   3. Create the Lambda function
+
+    `aws lambda create-function --function-name sendsosmessage --zip-file fileb://SOSmessage/sendsosfunc.zip --handler SendSosMessage.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566`
+
+   4. Create the event source mapping between function and queue
+    
+   `aws lambda create-event-source-mapping --function-name sendsosmessage --batch-size 5 --maximum-batching-window-in-seconds 60 --event-source-arn arn:aws:sqs:us-east-2:000000000000:Sosqueue --endpoint-url=http://localhost:4566`
+  
+If u don't want to do this process manually u can just set up the Applets, change the variable `path` in the file `setup_all.py` with the path of your installation folder and then run it.
+It will automatically do for you all the previously commands.
+
+## Use it
+
+**Launch the following command to set up the API**
+
+`uvicorn API:app --reload`
+
+**Launch the GUI on the browser using the file**
+
+`SoftairAssistant.html`
+
+**Launch the script that simulate the game session**
+
+`python3 PlayerSimulation.py`
+
+**Launch Discord and open the server that you have created previously**
+
+At this point you should see the GPS data on the map and all the information about player status on the GUI
+
+
+
+
+
+
+
+
+  
 The MainScene is the home page of the system and allows access to the different screens of the system and to manage the configurations allowing to change, export or import a configuration.
 ![alt text](https://github.com/musimathicslab/marco_smiles/blob/SalernoDaniele-2022/MainScene.jpeg?raw=true)
-
-### TrainScene
-The TrainScene allows the user to train the system and thus associate a hand configuration to a certain note, or to the pause. Then, once the recording phase of the various configurations is over, the user can launch the machine learning script and wait for the completion of the training phase.
-![alt text](https://github.com/musimathicslab/marco_smiles/blob/SalernoDaniele-2022/trainingScene.jpeg?raw=true)
-### PlayScene
-The PlayScene allows the user to play the musical instrument. The user in this scene can enable or disable the MIDI functionality. A Sinth allows the user to modify the sound of the instrument through the use of Knob.
-![alt text](https://github.com/musimathicslab/marco_smiles/blob/SalernoDaniele-2022/PlayScene.jpeg?raw=true)
 
 ## Developed by
 [Salerno Daniele](https://github.com/DanieleSalerno)
 
-### Under Supervision of:
-[De Prisco Roberto](https://github.com/robdep)
-
-[Zaccagnino Rocco](https://github.com/rzaccagnino)
 
 ## Future implementations
 - [x] Playing multiple notes at once
