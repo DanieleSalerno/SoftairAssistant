@@ -116,6 +116,7 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
+                Limit=1
 
 
             )

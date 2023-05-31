@@ -833,18 +833,20 @@ async function callAPI() {
                 console.log(array_sos.player[2]);
                 console.log("----------------------------");
                 console.log(array_sos.player[3]);
-                flag=0;
+
                 for (let i = 0; i < 4; i++) {
                     if(array_sos.player[i]!=undefined && array_sos.player[i].status=="not_resolved"){
                         console.log(array_sos.player[i].status);
                         players_sos[i] = 1;
                         index_sos=i;
-                        flag=1;
+
+                        updateSOS(players_sos)
                     }
-                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="resolved" && flag==1){
+                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="resolved" && players_life[i]>0){
                         console.log(array_sos.player[i].status);
                         players_sos[i] = 0;
                         resolvesos(i);
+
 
 
                     }
@@ -901,7 +903,7 @@ async function callAPI() {
 
 
         console.log("i'm waiting 2 sec")
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 500));
 
     }
 }

@@ -37,8 +37,27 @@ Infine è presente un'ultima coda relativa alle emergenze su di cui verranno inv
 Tutti i dati verranno poi memorizzati in un database utilizzando un event triggered Serverless function
 Nel momento in cui avviene un'emergenza la partita verrà messa in pausa e verrà inviato un messaggio sul canale discord dell'admin contenente tutte le informazioni sopra elencate. Nel momento in cui l'emergenza sarà risolta l'admin potrà far riprendere la sessione di gioco.
 
+<p align="center"><img src="./README_IMAGES/discordmessage.png"></p>
+
 Come si può notare tutti i dati inviati contengono l'id del game, questo perchè potrebbe tornare utile nel caso si voglia, in un implementazione futura, garantire assistenza post game e permettere ad ogni utente di effettuare il rewatch del game.
 Tutti i dati sopra riportati verranno mostrati, tramite una GUI, ad ogni utente.
+
+
+
+## Architecture
+
+<p align="center"><img src="./README_IMAGES/architecture.png"></p>
+
+- LocalStack is used to emulate the cloud environment and duplicate the AWS services.
+- A Python script that uses boto3 to transmit messages on the queues simulates the IoT devices on each player.
+- Amazon Simple Queue Service (SQS) is being used to implement the queue.
+- Amazon DynamoDB was used to create the database.
+- The functions are Serveless functions deployed on AWS Lambda.
+- Two IFTT Applets are used to send the message on Discord.
+- Dynamodb-admin provides access to the DynamoDB GUI.
+
+
+
 # Installation and usage
 ## Prerequisites 
 
@@ -90,6 +109,8 @@ or using the [dynamodb-admin] GUI with the command
 
 `DYNAMO_ENDPOINT=http://0.0.0.0:4566 dynamodb-admin`
 and then going to `http://localhost:8001`.
+
+
 
 
 
@@ -180,10 +201,10 @@ First of all u need to create a discord server with a text channel
    6. Click *Create action*, *Continue*, and *Finish*.
 
 3. Modify the variable key within the SendSosMessage.py function with your IFTT applet key (it can be find clicking on the icon of the webhook and clicking on _Documentation_).
-4. This lambda function have is a function with dependencies, so you need to follow the next steps to create it:
+4. This lambda function is a function with dependencies, so you need to follow the next steps to create it:
    1. Navigate to the SOSmessage folder 
    2. Install the additional dependencies using pip3 and zip the content of the new folder
-      1. `pip3 install --target ./package requests`
+      1. `pip3 install --target ./package requests==2.29.0`
       2. `cd package/`
       3. `zip r ../sendsosfunc.zip`
       4. `cd ..`
@@ -225,15 +246,13 @@ At this point you should see the GPS data on the map and all the information abo
 
 
   
-The MainScene is the home page of the system and allows access to the different screens of the system and to manage the configurations allowing to change, export or import a configuration.
-![alt text](https://github.com/musimathicslab/marco_smiles/blob/SalernoDaniele-2022/MainScene.jpeg?raw=true)
+
 
 ## Developed by
 [Salerno Daniele](https://github.com/DanieleSalerno)
 
 
 ## Future implementations
-- [x] Playing multiple notes at once
-- [x] Evolving the system as a tool that takes advantage of virtual reality
-- [x] Leveraging cloud services to perform the training phase
-- [x] Use more sensors and more features
+- [x] Implements the possibility to create account for each player
+- [x] Give the possibility to rewatch the game
+

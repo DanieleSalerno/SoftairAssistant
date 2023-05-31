@@ -53,9 +53,11 @@ def lambda_handler(event, context):
             table.put_item(Item=item)
 
             #sending request to IFTT
-            req = requests.post(url, json={"value1": player_id, "value2": latitude, "value3": longitude})
-            time.sleep(1)
-            req2 = requests.post(url2, json={"value1": heartbeat, "value2": oxygen,"value3":time_stamp})
+
+            if(status != "resolved"):
+                req = requests.post(url, json={"value1": player_id, "value2": latitude, "value3": longitude})
+                time.sleep(1)
+                req2 = requests.post(url2, json={"value1": heartbeat, "value2": oxygen,"value3":time_stamp})
 
 
 

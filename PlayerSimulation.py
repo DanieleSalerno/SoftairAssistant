@@ -95,14 +95,14 @@ for i in range(duration_in_sec):
                     msg_info= '{"player_id": "%s_%s","timestamp": "%s","hittedby": "%s_%s","game_id": "%s","life":"%s"}' \
                        % (team, str(i), measure_date, hit_team, str(random.randrange(0,4)),str(1),str(last_life_num[team_num][i]))
                     #print(msg_info)
-
-                    print("life of player:" +team+"_"+str(i)+"lifepoints: "+str(last_life_num[team_num][i]))
+                    if(team=="Vitality"):
+                        print("life of player:" +team+"_"+str(i)+"lifepoints: "+str(last_life_num[team_num][i]))
                     queueinfo.send_message(MessageBody=msg_info)
 
 
 
             #simulating SOS
-            if(random.randrange(0,100)>95 and sos==0):
+            if(random.randrange(0,100)>97 and sos==0 and team=="Vitality"):
                 player_sos=team, str(i)
                 sos=1
                 oxygen=90
