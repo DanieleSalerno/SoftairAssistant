@@ -41,7 +41,8 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
-                Limit=1
+                Limit=1,
+
             )
         except ClientError as e:
             print(e.response['Error']['Message'])
@@ -61,9 +62,9 @@ async def root():
 
 
 
-@app.get('/infoplayer')
+@app.get('/infoplayer/{g_id}')
 #that will be the first thing do when user use api
-async def root():
+async def root(g_id: int):
     #api response
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:4566")
 
@@ -80,6 +81,8 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
+                FilterExpression=Attr('game_id').eq(str(g_id))
+
 
 
             )
@@ -97,9 +100,9 @@ async def root():
 
 
 
-@app.get('/SOSevent')
+@app.get('/SOSevent/{g_id}')
 
-async def root():
+async def root(g_id:int):
     #api response
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:4566")
 
@@ -116,7 +119,8 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
-                Limit=1
+                Limit=1,
+                FilterExpression=Attr('game_id').eq(str(g_id))
 
 
             )
@@ -134,9 +138,9 @@ async def root():
 
 
 
-@app.get('/getkill')
+@app.get('/getkill/{g_id}')
 
-async def root():
+async def root(g_id: int):
     #api response
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:4566")
 
@@ -153,7 +157,7 @@ async def root():
             response = table.query(
                 KeyConditionExpression=Key('player_id').eq(player),
                 ScanIndexForward=False,
-                FilterExpression=Attr('game_id').eq("1")
+                FilterExpression=Attr('game_id').eq(str(g_id))
 
 
 

@@ -41,6 +41,13 @@ queuesos=sqs.get_queue_by_name(QueueName="Sosqueue")
 
 player_sos="aaaa"
 sos=0
+print("GAME STARTING")
+for i in range(5):
+    print(i+1)
+    time.sleep(1)
+
+
+game_id=3
 duration_in_sec = 100;
 for i in range(duration_in_sec):
     team_num=0
@@ -69,7 +76,7 @@ for i in range(duration_in_sec):
             #simulating ammo
             #prob of 33# to shot
             if(random.randrange(0,100)>66):
-                shotted=random.randrange(0,20)
+                shotted=random.randrange(0,10)
                 #print("shotted ammo for PLAYER_ID"+str(i)+"="+str(shotted))
                 newammo=last_ammo_number[team_num][i] - shotted
 
@@ -93,10 +100,10 @@ for i in range(duration_in_sec):
                     last_life_num[team_num][i]-=1
 
                     msg_info= '{"player_id": "%s_%s","timestamp": "%s","hittedby": "%s_%s","game_id": "%s","life":"%s"}' \
-                       % (team, str(i), measure_date, hit_team, str(random.randrange(0,4)),str(1),str(last_life_num[team_num][i]))
+                       % (team, str(i), measure_date, hit_team, str(random.randrange(0,4)),str(game_id),str(last_life_num[team_num][i]))
                     #print(msg_info)
-                    if(team=="Vitality"):
-                        print("life of player:" +team+"_"+str(i)+"lifepoints: "+str(last_life_num[team_num][i]))
+
+                    print("life of player:" +team+"_"+str(i)+"   lifepoints: "+str(last_life_num[team_num][i]))
                     queueinfo.send_message(MessageBody=msg_info)
 
 
@@ -108,19 +115,19 @@ for i in range(duration_in_sec):
                 oxygen=90
                 heartbeat=120
                 sos_msg= '{"player_id": "%s_%s","timestamp": "%s","latitude": "%s","longitude": "%s","game_id":"%s","oxygen": "%s","heartbeat":"%s","status":"not_resolved"}' \
-                                    % (team, str(i), measure_date, str(newlat), str(newlon),str(1),str(oxygen),str(heartbeat))
+                                    % (team, str(i), measure_date, str(newlat), str(newlon),str(game_id),str(oxygen),str(heartbeat))
                 print("SOS request player:"+team+str(i))
                 queuesos.send_message(MessageBody=sos_msg)
                 response=input("press a key to continue the game ")
                 sos_msg= '{"player_id": "%s_%s","timestamp": "%s","latitude": "%s","longitude": "%s","game_id":"%s","oxygen": "%s","heartbeat":"%s","status":"resolved"}' \
-                         % (team, str(i), measure_date, str(newlat), str(newlon),str(1),str(oxygen),str(heartbeat))
+                         % (team, str(i), measure_date, str(newlat), str(newlon),str(game_id),str(oxygen),str(heartbeat))
                 queuesos.send_message(MessageBody=sos_msg)
 
 
 
 
             msg_body = '{"player_id": "%s_%s","timestamp": "%s","latitude": "%s","longitude": "%s","game_id":"%s","munition": "%s"}' \
-                       % (team, str(i), measure_date, str(newlat), str(newlon),str(1),str(last_ammo_number[team_num][i]))
+                       % (team, str(i), measure_date, str(newlat), str(newlon),str(game_id),str(last_ammo_number[team_num][i]))
             #print(msg_body)
             queue.send_message(MessageBody=msg_body)
 

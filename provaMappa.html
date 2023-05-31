@@ -635,6 +635,7 @@
     }
 
     async function updatevalue(name,munition){
+
         document.getElementById('user_tag_m').innerHTML=name[0];
         document.getElementById('ally1_tag_m').innerHTML=name[1];
         document.getElementById('ally2_tag_m').innerHTML=name[2];
@@ -671,12 +672,15 @@
                     document.getElementById(names[i]+"_life1").src="image/redHt.png";
                     document.getElementById(names[i]+"_life2").src="image/redHt.png";
                     document.getElementById(names[i]+"_life3").src="image/redHt.png";
+                    img_icon_l[i].src="image/ally_circle.png";
+                    //markers[i].setIcon(icons[i]);
                     break;
                 case 0:
                     document.getElementById(names[i]+"_life1").src="image/blackHt.png";
                     document.getElementById(names[i]+"_life2").src="image/blackHt.png";
                     document.getElementById(names[i]+"_life3").src="image/blackHt.png";
                     markers[i].setIcon(deadIcon);
+
                     img_icon_l[i].src="image/skull.png";
                     break;
             }
@@ -715,9 +719,10 @@
 
 
 
-
+game_id=3
 </script>
 <script type="text/javascript">
+    let flag=0
 async function callAPI() {
     while(true){
 
@@ -738,7 +743,7 @@ async function callAPI() {
             if (request.status = 200) {
                 array = JSON.parse(request.response);
                 console.log("lettura array");
-
+                game_id=array.player[0].game_id
                 for (let i = 0; i < 4; i++) {
 
                         players_name[i] = array.player[i].player_id;
@@ -777,7 +782,7 @@ async function callAPI() {
         let players_life=[3,3,3,3];
         let array_infos;
         let requestinfo = new XMLHttpRequest();
-        requestinfo.open("GET", "http://127.0.0.1:8000/infoplayer");
+        requestinfo.open("GET", "http://127.0.0.1:8000/infoplayer/"+game_id);
         requestinfo.send()
         requestinfo.onload = () => {
             console.log(requestinfo);
@@ -793,11 +798,36 @@ async function callAPI() {
                 console.log("----------------------------");
                 console.log(array_infos.player[3]);
 
-                for (let i = 0; i < 4; i++) {
-                    if(array_infos.player[i]!=undefined){
-                    players_life[i] = parseInt(array_infos.player[i].life);
+                array_infos.player.forEach(item=>
+                {
+                    console.log("INFO "+item);
+
+                    if (item != undefined) {
+                        console.log("player_id   " + item.player_id)
+                        switch (item.player_id) {
+
+
+                            case "Vitality_0":
+                                players_life[0] = parseInt(item.life);
+                                break;
+
+                            case "Vitality_1":
+                                players_life[1] = parseInt(item.life);
+                                break;
+
+                            case "Vitality_2":
+                                players_life[2] = parseInt(item.life);
+                                break;
+
+                            case "Vitality_3":
+                                players_life[3] = parseInt(item.life);
+                                break;
+                        }
+
                     }
-                }
+                })
+
+
 
                 for (let i = 0; i < 4; i++) {
                     console.log(players_life[i])
@@ -818,14 +848,14 @@ async function callAPI() {
         let players_sos=[0,0,0,0];
         let array_sos;
         let requestsos = new XMLHttpRequest();
-        requestsos.open("GET", "http://127.0.0.1:8000/SOSevent");
+        requestsos.open("GET", "http://127.0.0.1:8000/SOSevent/"+game_id);
         requestsos.send()
         requestsos.onload = () => {
             console.log(requestsos);
             if (requestsos.status = 200) {
                 array_sos = JSON.parse(requestsos.response);
-                console.log("lettura array SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS SOS ");
-                console.log("----------------------------");
+
+                /*console.log("----------------------------");
                 console.log(array_sos.player[0]);
                 console.log("----------------------------");
                 console.log(array_sos.player[1]);
@@ -834,24 +864,77 @@ async function callAPI() {
                 console.log("----------------------------");
                 console.log(array_sos.player[3]);
 
-                for (let i = 0; i < 4; i++) {
-                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="not_resolved"){
-                        console.log(array_sos.player[i].status);
-                        players_sos[i] = 1;
-                        index_sos=i;
+                 */
+
+
+
+                array_sos.player.forEach(item=>{
+                    if (item != undefined && item.status == "not_resolved") {
+                        console.log("SOS "+item.status);
+                        switch (item.player_id) {
+                            case "Vitality_0":
+                                players_sos[0] = 1;
+                                break;
+
+                            case "Vitality_1":
+                                players_sos[1] = 1;
+                                break;
+
+                            case "Vitality_2":
+                                players_sos[2] = 1;
+                                break;
+
+                            case "Vitality_3":
+                                players_sos[3] = 1;
+                                break;
+
+                        }
+
+
+                        flag = 1
 
                         updateSOS(players_sos)
                     }
-                    if(array_sos.player[i]!=undefined && array_sos.player[i].status=="resolved" && players_life[i]>0){
-                        console.log(array_sos.player[i].status);
-                        players_sos[i] = 0;
-                        resolvesos(i);
+
+
+                    if(item!=undefined && item.status=="resolved" && flag==1){
+
+
+                            console.log("SOS "+item.status);
+                            switch (item.player_id) {
+                                case "Vitality_0":
+                                    players_sos[0] = 0;
+                                    index_sos=0;
+                                    break;
+
+                                case "Vitality_1":
+                                    players_sos[1] = 0;
+                                    index_sos=1;
+                                    break;
+
+                                case "Vitality_2":
+                                    players_sos[2] = 0;
+                                    index_sos=2;
+                                    break;
+
+                                case "Vitality_3":
+                                    players_sos[3] = 0;
+                                    index_sos=3;
+                                    break;
+
+                            }
+
+
+
+
+                        resolvesos(index_sos);
+                        flag=0;
 
 
 
                     }
 
-                }
+                })
 
 
 
@@ -871,7 +954,7 @@ async function callAPI() {
         var hits=0;
         let kill_data;
         let killinfo = new XMLHttpRequest();
-        killinfo.open("GET", "http://127.0.0.1:8000/getkill");
+        killinfo.open("GET", "http://127.0.0.1:8000/getkill/"+game_id);
         killinfo.send()
         killinfo.onload = () => {
             console.log(killinfo);
