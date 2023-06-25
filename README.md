@@ -3,11 +3,11 @@
 
 # SoftairAssistant
 ## Overview
-SoftairAssistant è un progetto che mira a sviluppare un dispositivo in grado di assistere i iocatori di softair durante le sessioni di gioco. Si pone l'obiettivo di fornire assistenza real time durante le sessioni di gioco fornendo informazioni relative alla posizione GPS dei membri del team, alla quantità di munizioni rimaste per ogni player e la precisione media del team. Inoltre, in caso di emergenza, fornisce le informazioni necessarie per intervenire nel modo più veloce possibile. 
+SoftairAssistant is a project that aims to develop a device that can assist softair players during game sessions. It aims to provide real time assistance during game sessions by providing information regarding the GPS location of team members, the amount of ammunition left for each player, and the average accuracy of the team. It also provides the necessary information to intervene as quickly as possible in case of an emergency.
 
-Il progetto è basato su un IoT Cloud Architecture dove diversi sensori IoT collezionano dati e li inviano sul cloud dove verranno processati attraverso computazione serverless e salvati in un NoSQL database per essere facilmente accessibili
-I sensori sono piazzati su ogni giocatore e ne misurano la posizione GPS,il battito cardiaco,il livello di ossigeno nel sangue. Inoltre ogni player è equipaggiato con un giubbotto antiproiettile dotato di lettore RFID in grado di riscontrare da chi è stato colpito il giocatore leggendo l'RFID integrato nei proiettili.
-Esiste una coda per ogni team su di cui ogni sensore invierà dati contenenti le seguenti informazioni
+The project is based on an IoT Cloud Architecture where several IoT sensors collect data and send it to the cloud where it will be processed through serverless computation and stored in a NoSQL database to be easily accessible.
+Sensors are placed on each player and measure their GPS location,heart rate,blood oxygen level. In addition,each player is equipped with a bulletproof vest with an RFID reader that can detect who the player was hit by by reading the RFID embedded in the bullets.
+There is a queue for each team on which each sensor will send data containing the following information
 - The ID of the player;
 - time in format yyyy-mm-dd hh:mm:ss;
 - latitude;
@@ -21,8 +21,9 @@ Inoltre è presente una coda relativa alle informazioni di ogni game su di cui v
 - time in format yyyy-mm-dd hh:mm:ss;
 - the ID of the player who made the shot;
 - the number of remaining lives of the hitted player
+- the ID of the Game
 
-Tutti questi dati verranno salvati mediante un event triggered Serverless function sul database.
+All this data will be saved by an event triggered Serverless function on the database.
 
 Infine è presente un'ultima coda relativa alle emergenze su di cui verranno inviate le seguenti informazioni:
 - The ID of the player that call the SOS;
@@ -31,17 +32,19 @@ Infine è presente un'ultima coda relativa alle emergenze su di cui verranno inv
 - longitude;
 - The ID of the game;
 - oxygen level;
-- heartbeat;
+- heart rate;
 - the status of emergency;
 
-Tutti i dati verranno poi memorizzati in un database utilizzando un event triggered Serverless function
-Nel momento in cui avviene un'emergenza la partita verrà messa in pausa e verrà inviato un messaggio sul canale discord dell'admin contenente tutte le informazioni sopra elencate. Nel momento in cui l'emergenza sarà risolta l'admin potrà far riprendere la sessione di gioco.
-
+All data will then be stored in a database using an event triggered Serverless function.
+The moment an emergency occurs the game will be paused and a message will be sent to the admin's discord channel containing all the information listed above. When the emergency is resolved the admin will be able to restart the game session.
 <p align="center"><img src="./README_IMAGES/discordmessage.png"></p>
 
-Come si può notare tutti i dati inviati contengono l'id del game, questo perchè potrebbe tornare utile nel caso si voglia, in un implementazione futura, garantire assistenza post game e permettere ad ogni utente di effettuare il rewatch del game.
-Tutti i dati sopra riportati verranno mostrati, tramite una GUI, ad ogni utente.
+As can be seen all submitted data contains the game id, this is because it might come in handy in case we want, in a future implementation, to ensure post-game support and allow each user to rewatch the game.
+All the above data will be shown, via a GUI, to each user.
 
+<p align="center"><img src="./README_IMAGES/GUI.png"></p>
+
+The GUI was built with HTML, CSS, JavaScript and using the [Leaflet](https://leafletjs.com/) library.
 
 
 ## Architecture

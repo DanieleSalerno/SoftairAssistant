@@ -1,3 +1,4 @@
+import os
 import time
 
 import boto3
@@ -46,7 +47,7 @@ for i in range(5):
     print(i+1)
     time.sleep(1)
 
-
+counter=0
 game_id=3
 duration_in_sec = 100;
 for i in range(duration_in_sec):
@@ -75,7 +76,7 @@ for i in range(duration_in_sec):
 
             #simulating ammo
             #prob of 33# to shot
-            if(random.randrange(0,100)>66):
+            if(random.randrange(0,100)>66) and counter>10:
                 shotted=random.randrange(0,10)
                 #print("shotted ammo for PLAYER_ID"+str(i)+"="+str(shotted))
                 newammo=last_ammo_number[team_num][i] - shotted
@@ -92,7 +93,7 @@ for i in range(duration_in_sec):
             else:
                 hit_team=team_names[0]
             #remember every player only know when he get hitted by someone
-            if(last_ammo_number[team_num][i]>0 and last_life_num[team_num][i]>0):
+            if(last_ammo_number[team_num][i]>0 and last_life_num[team_num][i]>0) and counter>10:
                 #prob of 10% of get hitted by someone
                 prob_hit=random.randrange(0,100)
 
@@ -135,6 +136,7 @@ for i in range(duration_in_sec):
 
         team_num=team_num+1
     time.sleep(2)
+    counter=counter+1
 
 
 print(last_lat_lon)

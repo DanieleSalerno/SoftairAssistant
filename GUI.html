@@ -636,6 +636,13 @@
 
     async function updatevalue(name,munition){
 
+
+        document.getElementById("ammo_n_user").innerHTML=munition[0]+"/200";
+        document.getElementById("ammo_n_ally1").innerHTML=munition[1]+"/200";
+        document.getElementById("ammo_n_ally2").innerHTML=munition[2]+"/200";
+        document.getElementById("ammo_n_ally3").innerHTML=munition[3]+"/200";
+
+        
         document.getElementById('user_tag_m').innerHTML=name[0];
         document.getElementById('ally1_tag_m').innerHTML=name[1];
         document.getElementById('ally2_tag_m').innerHTML=name[2];
@@ -646,10 +653,6 @@
         document.getElementById('ally2_name_l').innerHTML=name[2];
         document.getElementById('ally3_name_l').innerHTML=name[3];
 
-        document.getElementById("ammo_n_user").innerHTML=munition[0]+"/200";
-        document.getElementById("ammo_n_ally1").innerHTML=munition[1]+"/200";
-        document.getElementById("ammo_n_ally2").innerHTML=munition[2]+"/200";
-        document.getElementById("ammo_n_ally3").innerHTML=munition[3]+"/200";
     }
 
 
@@ -672,7 +675,7 @@
                     document.getElementById(names[i]+"_life1").src="image/redHt.png";
                     document.getElementById(names[i]+"_life2").src="image/redHt.png";
                     document.getElementById(names[i]+"_life3").src="image/redHt.png";
-                    img_icon_l[i].src="image/ally_circle.png";
+                    //img_icon_l[i].src="image/ally_circle.png";
                     //markers[i].setIcon(icons[i]);
                     break;
                 case 0:
@@ -750,6 +753,7 @@ async function callAPI() {
                         players_latitude[i] = array.player[i].latitude;
                         players_longitude[i] = array.player[i].longitude;
                         players_ammo[i] = array.player[i].munition;
+                        console.log("munition of "+i +" "+ players_ammo[i])
 
 
                 }
